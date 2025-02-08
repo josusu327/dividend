@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: susu-dividend
+
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    #      use-new-id-generator-mappings: false   --> 스프링부트가 3.4.2버전이라 생략.
+    show-sql: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:dividend;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
