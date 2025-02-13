@@ -2,19 +2,17 @@ spring:
   application:
     name: susu-dividend
 
-
   h2:
     console:
       enabled: true
       path: /h2-console
 
-
   jpa:
     hibernate:
       ddl-auto: create
-    #      use-new-id-generator-mappings: false   --> 스프링부트가 3.4.2버전이라 생략.
     show-sql: true
     defer-datasource-initialization: true
+    database: h2
 
   sql:
     init:
@@ -25,6 +23,14 @@ spring:
     url: jdbc:h2:mem:dividend;DB_CLOSE_DELAY=-1
     username: sa
     password:
+
+  cache:
+    type: redis
+
+  data:
+    redis:
+      host: localhost
+      port: 6378
 
 scheduler:
   scrap:
