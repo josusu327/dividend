@@ -35,6 +35,8 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'org.apache.commons:commons-collections4:4.3'
 
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'  // NoClassDefFoundError: javax/xml/bind/DatatypeConverter가 발생하여 추가
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
