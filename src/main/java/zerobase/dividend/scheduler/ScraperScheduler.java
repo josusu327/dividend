@@ -51,6 +51,7 @@ public class ScraperScheduler {
                                 .existsByCompanyIdAndDate(e.getCompanyId(), e.getDate());
                         if (!exists) {
                             this.dividendRepository.save(e);
+                            log.info("insert new dividend -> " + e.toString());
                         }
                     });
 

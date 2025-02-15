@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,11 +30,6 @@ public class TokenProvider {
     @Value("${spring.jwt.secret}")
     private String secretKey;
 
-    @PostConstruct
-    public void init() {
-        log.info("✅ JWT Secret Key: {}", secretKey);
-    }
-
     /**
      * 토큰 생성 (발급)
      */
@@ -47,8 +41,6 @@ public class TokenProvider {
 
         var now = new Date();
         var expiredDate = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
-
-        log.info("토큰 서명 준비: {} (비밀키 길이: {})", claims, secretKey.length()); // 서명 준비 상태 로그 추가
 
         String token = null;
         try {
@@ -70,7 +62,6 @@ public class TokenProvider {
      * JWT 에서 사용자 정보 가져오기
      */
     public Authentication getAuthentication(String jwt) {
-        log.info("* 사용자정보 jwt 에서 가져오기");
         UserDetails userDetails = this.memberService.loadUserByUsername(this.getUserName(jwt));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
@@ -94,7 +85,6 @@ public class TokenProvider {
      * JWT 파싱
      */
     private Claims parseClaims(String token) {
-        log.info("* jwt 파싱");
         try {
             return Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
